@@ -511,7 +511,14 @@ function parseJogosAPI(data) {
   const jogos = [];
   const matches = data.matches || [];
   matches.forEach((m, i) => {
-    console.log(m.date, m.time, m.team1, m.team2); // <-- adicione isso
+    console.log(m.date, m.time, m.team1, m.team2);
+    const grupo = extrairGrupo(m.group || m.round || '');
+    const id = `M${i + 1}`;
+    let gols_casa = null, gols_fora = null;
+    if (m.score && m.score.ft && m.score.ft.length === 2) {
+      gols_casa = m.score.ft[0];
+      gols_fora = m.score.ft[1];
+    }
     const t1 = traduzir(normalizarNome(m.team1 || ''));
     const t2 = traduzir(normalizarNome(m.team2 || ''));
     jogos.push({
