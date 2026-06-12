@@ -508,10 +508,16 @@ function parseJogosAPI(data) {
 }
 
 function extrairGrupo(nome) {
-  if (!nome) return null;
-  // "Group A", "Grupo A", "Round 1 - Group A"
+  if (!nome) return 'Outros';
   const m = nome.match(/Group\s+([A-L])/i) || nome.match(/Grupo\s+([A-L])/i);
-  return m ? m[1].toUpperCase() : null;
+  if (m) return m[1].toUpperCase();
+  // Fases eliminatórias
+  if (/round of 16/i.test(nome)) return 'Oitavas';
+  if (/quarter/i.test(nome)) return 'Quartas';
+  if (/semi/i.test(nome)) return 'Semifinal';
+  if (/final/i.test(nome)) return 'Final';
+  if (/third/i.test(nome)) return '3º Lugar';
+  return nome; // fallback: usa o nome original
 }
 
 function normalizarNome(nome) {
