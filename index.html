@@ -622,6 +622,7 @@ function renderJogos() {
   Object.keys(grupos).sort().forEach(g => {
     html += `<p class="group-label">Grupo ${g}</p><div class="games-grid">`;
     grupos[g].forEach(jogo => {
+      if (!jogo.casa || jogo.casa.startsWith('L') || jogo.casa.startsWith('W')) return;
       const dataJogo = new Date(jogo.data + 'T' + (jogo.hora || '12:00') + ':00-03:00');
       const resultado = getResultado(jogo);
       const finalizado = !!resultado;
@@ -680,9 +681,9 @@ function renderJogos() {
             <span class="game-badge ${badgeClass}">${badgeText}</span>
           </div>
           <div class="teams-row">
-            <div class="team"><span class="team-flag">${jogo.cf}</span><span class="team-name">${jogo.casa}</span></div>
+            <div class="team"><span class="team-flag">${jogo.cf}</span><span class="team-name">${jogo.cf} ${jogo.casa}</span></div>
             <div class="score-area">${scoreDisplay}</div>
-            <div class="team"><span class="team-flag">${jogo.ff}</span><span class="team-name">${jogo.fora}</span></div>
+            <div class="team"><span class="team-flag">${jogo.cf}</span><span class="team-name">${jogo.cf} ${jogo.casa}</span></div>
           </div>
           <div class="palpite-area">
             <span class="palpite-label">Seu palpite:</span>
