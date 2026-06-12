@@ -657,15 +657,26 @@ function renderJogos() {
           ${pontosHtml}
         </div>`;
 
-      const outrosPalpites = (todosOsPalpites[jogo.id] || []).filter(p => p.user_id !== currentUser.id);
+const todosPalpitesJogo = (todosOsPalpites[jogo.id] || []);
       let outrosHtml = '';
-      if (outrosPalpites.length) {
-        const chips = outrosPalpites.map(p => `
-          <div class="outro-chip">
+      if (todosPalpitesJogo.length) {
+        const chips = todosPalpitesJogo.map(p => {
+          const eu = p.user_id === currentUser.id;
+          let ptsBadge = '';
+          if (finalizado) {
+            const pts = calcPontos(p, resultado);
+            const cl = pts===3?'pts-3':pts===1?'pts-1':'pts-0';
+            const emoji = pts===3?'🎯':pts===1?'✅':'❌';
+            ptsBadge = `<span class="pontos-badge ${cl}" style="font-size:10px;padding:2px 6px">${emoji} ${pts}pt</span>`;
+          }
+          return `
+          <div class="outro-chip" style="${eu?'border:1px solid rgba(245,197,24,0.4);background:rgba(245,197,24,0.07)':''}">
             <div class="chip-avatar" style="background:${p.cor}">${p.nome.substring(0,2).toUpperCase()}</div>
-            <span style="font-size:11px;color:var(--cinza)">${p.nome.split(' ')[0]}</span>
+            <span style="font-size:11px;color:${eu?'var(--dourado)':'var(--cinza)'}">${p.nome.split(' ')[0]}${eu?' 👈':''}</span>
             <span class="chip-score">${p.gols_casa}:${p.gols_fora}</span>
-          </div>`).join('');
+            ${ptsBadge}
+          </div>`;
+        }).join('');
         outrosHtml = `
           <div class="outros-palpites">
             <div class="outros-label">Palpites da galera</div>
