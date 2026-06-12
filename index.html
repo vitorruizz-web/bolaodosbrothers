@@ -511,7 +511,6 @@ function parseJogosAPI(data) {
   const jogos = [];
   const matches = data.matches || [];
   matches.forEach((m, i) => {
-    console.log(m.date, m.time, m.team1, m.team2);
     const grupo = extrairGrupo(m.group || m.round || '');
     const id = `M${i + 1}`;
     let gols_casa = null, gols_fora = null;
