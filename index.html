@@ -21,6 +21,21 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', sans-serif; background: var(--azul-noite); color: var(--branco); min-height: 100vh; overflow-x: hidden; }
 
+.field-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url('https://raw.githubusercontent.com/vitorruizz-web/bolaodosbrothers/be42cd198c9345a90581e32870fb819931ae28aa/Gemini_Generated_Image_armzbxarmzbxarmz.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Escurecer para não atrapalhar a leitura */
+.field-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 27, 42, 0.75);
+}
+
   .field-bg { position: fixed; inset: 0; z-index: 0; }
   .field-lines { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(90deg,#fff 1px,transparent 1px),linear-gradient(0deg,#fff 1px,transparent 1px); background-size: 60px 60px; }
   .field-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 300px; height: 300px; border: 2px solid rgba(255,255,255,0.04); border-radius: 50%; }
@@ -42,7 +57,7 @@
 
   /* LOGIN */
   #login-screen { position:relative; z-index:10; min-height:100vh; display:none; align-items:center; justify-content:center; padding:2rem; }
-  .login-card { background:rgba(27,58,92,0.85); border:1px solid rgba(245,197,24,0.3); border-radius:24px; padding:3rem 2.5rem; max-width:420px; width:100%; text-align:center; backdrop-filter:blur(20px); box-shadow:0 0 60px rgba(245,197,24,0.1),0 20px 60px rgba(0,0,0,0.5); }
+  .login-card { background:rgba(27,58,92,0.85); border:1px solid rgba(245,197,24,0.3); border-radius:24px; padding:3rem 2.5rem; max-width:420px; width:100%; text-align:center; backdrop-filter:blur(20px); box-shadow:0 0 60px rgba(245,197,24,0.1),0 20px 60px rgba(0,0,0,0.5); position:relative; z-index:1; }
   .trophy-icon { font-size:80px; animation:floatTrophy 3s ease-in-out infinite; display:block; margin-bottom:1rem; }
   @keyframes floatTrophy { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-12px) rotate(3deg)} }
   .login-title { font-family:'Bebas Neue',cursive; font-size:3rem; letter-spacing:3px; color:var(--dourado); text-shadow:0 0 30px rgba(245,197,24,0.4); line-height:1; margin-bottom:0.4rem; }
@@ -469,7 +484,9 @@ async function carregarJogosDaAPI() {
     const res = await fetch(URL_API);
     if (!res.ok) throw new Error('API indisponível');
     const data = await res.json();
-    JOGOS = parseJogosAPI(data);
+    const parsed = parseJogosAPI(data);
+    if (!parsed || parsed.length === 0) throw new Error('Sem jogos na API');
+    JOGOS = parsed;
     fonteJogos = 'api';
   } catch(e) {
     console.warn('API openfootball falhou, usando dados locais:', e);
