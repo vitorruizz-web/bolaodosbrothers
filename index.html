@@ -23,28 +23,26 @@
 
 .field-bg {
   position: fixed; inset: 0; z-index: 0;
+}
+
+.field-bg::before {
+  content: '';
+  position: fixed; inset: 0;
   background-image: url('https://raw.githubusercontent.com/vitorruizz-web/bolaodosbrothers/be42cd198c9345a90581e32870fb819931ae28aa/Gemini_Generated_Image_armzbxarmzbxarmz.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  
-}
-.field-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(13, 27, 42, 0.75);
-}
-/* Escurecer para não atrapalhar a leitura */
-.field-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(13, 27, 42, 0.75);
+  z-index: -1;
 }
 
-  
+.field-bg::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: rgba(13, 27, 42, 0.75);
+  z-index: -1;
+}
+
+
   .field-lines { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(90deg,#fff 1px,transparent 1px),linear-gradient(0deg,#fff 1px,transparent 1px); background-size: 60px 60px; }
   .field-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 300px; height: 300px; border: 2px solid rgba(255,255,255,0.04); border-radius: 50%; }
 
@@ -218,12 +216,8 @@
   .header-inner{gap:0.5rem}
   .tabs{order:3;width:100%}
   .tab-btn{flex:1;text-align:center;font-size:11px;padding:8px 10px}
-  .field-bg {
-    background-attachment: scroll;
-    background-position: center top;
-    background-size: 100% auto;
-  }
 }
+  
 </style>
 </head>
 <body>
