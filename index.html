@@ -110,7 +110,20 @@
   /* JOGOS */
   .group-label { font-family:'Bebas Neue',cursive; font-size:1.1rem; letter-spacing:2px; color:var(--cinza); margin:2rem 0 0.8rem; border-left:3px solid var(--dourado); padding-left:10px; }
   .games-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:16px; margin-bottom:1rem; }
-  .game-card { background:rgba(27,58,92,0.6); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:1.2rem; transition:all 0.3s; position:relative; overflow:hidden; }
+  .game-card {
+  background: url('https://raw.githubusercontent.com/vitorruizz-web/bolaodosbrothers/f8ddfc1c817561784339aea17b6da7c61898d1e9/obra%20de%20arte.png') center/cover no-repeat;
+  border: 8px solid #b8860b;
+  border-radius: 4px;
+  padding: 1.2rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 2px #f5c518,
+    0 0 0 4px #7a5100,
+    8px 12px 30px rgba(0,0,0,0.7),
+    inset 0 0 60px rgba(0,0,0,0.55);
+}
   .game-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--verde-claro),var(--dourado)); opacity:0; transition:opacity 0.3s; }
   .game-card:hover::before { opacity:1; }
   .game-card.has-palpite { border-color:rgba(245,197,24,0.25); background:rgba(27,58,92,0.8); }
