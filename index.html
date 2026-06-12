@@ -118,9 +118,9 @@
   .badge-finalizado { background:rgba(245,197,24,0.1); color:var(--dourado); }
   @keyframes pulseText { 0%,100%{opacity:1} 50%{opacity:0.5} }
   .teams-row { display:flex; align-items:center; gap:12px; }
-  .team { min-width:0; flex:1; text-align:center; overflow:hidden; }
+  .team { min-width:0; flex:1; text-align:center; overflow:hidden; display:flex; align-items:center; justify-content:center; }
   .team-flag { font-size:2.2rem; display:block; margin-bottom:4px; line-height:1; }
-  .team-name { font-size:11px; color:var(--cinza); text-transform:uppercase; letter-spacing:0.5px; font-weight:500; white-space:normal; word-break:break-word; line-height:1.3; max-width:90px; }
+  .team-name { font-size:11px; color:var(--cinza); text-transform:uppercase; letter-spacing:0.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:110px; display:inline-flex; align-items:center; gap:4px; }
   .score-area { display:flex; flex-direction:column; align-items:center; gap:6px; min-width:90px; }
   .real-score { font-family:'Bebas Neue',cursive; font-size:1.8rem; letter-spacing:4px; color:var(--dourado); line-height:1; }
   .real-score-label { font-size:10px; color:var(--cinza); text-transform:uppercase; letter-spacing:1px; }
