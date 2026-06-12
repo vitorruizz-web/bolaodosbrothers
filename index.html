@@ -269,7 +269,6 @@
       <div class="tabs">
         <button class="tab-btn active" onclick="showTab('palpites',this)">⚽ Palpites</button>
         <button class="tab-btn" onclick="showTab('ranking',this)">🥇 Ranking</button>
-        <button class="tab-btn" onclick="showTab('resultados',this)">📊 Resultados</button>
       </div>
       <div class="header-user">
         <div class="user-avatar" id="header-avatar">?</div>
@@ -309,21 +308,6 @@
       </div>
       <div id="ranking-container">
         <div class="empty-state"><div class="big">🏆</div><p>Nenhum palpite computado ainda</p></div>
-      </div>
-    </div>
-
-    <!-- RESULTADOS -->
-    <div class="section" id="sec-resultados">
-      <div class="section-header">
-        <h2 class="section-title">📊 Resultados Reais</h2>
-        <button class="btn-secondary" onclick="carregarResultados()">↻ Atualizar</button>
-      </div>
-      <div class="results-info">
-        <span style="font-size:1.4rem">📡</span>
-        <span>Resultados puxados automaticamente da API openfootball (Copa do Mundo 2026). Atualizado a cada acesso.</span>
-      </div>
-      <div id="results-container">
-        <div class="empty-state"><div class="big">📡</div><p>Buscando resultados...</p></div>
       </div>
     </div>
 
@@ -611,10 +595,8 @@ async function carregarResultadosDB() {
 // Resultado efetivo de um jogo — API tem prioridade sobre manual
 // ================================================================
 function getResultado(jogo) {
-  // 1. Tenta resultado da API (openfootball)
-  if (jogo.resultado_api !== null) return { ...jogo.resultado_api, fonte: 'api' };
-  // 2. Fallback: resultado manual no Supabase
   if (resultados[jogo.id]) return resultados[jogo.id];
+  if (jogo.resultado_api !== null) return { ...jogo.resultado_api, fonte: 'api' };
   return null;
 }
 
@@ -672,11 +654,12 @@ function renderJogos() {
         pontosHtml = `<span class="pontos-badge ${cl}">${emoji} ${pts} pt${pts!==1?'s':''}</span>`;
       }
 
-      const resultadoRow = meuPalpite ? `
+      const resultadoRow = `
         <div class="resultado-row">
-          <div class="meu-palpite-chip"><span>Meu palpite:</span><strong>${meuPalpite.gols_casa} : ${meuPalpite.gols_fora}</strong></div>
+          ${meuPalpite ? `<div class="meu-palpite-chip"><span>Meu palpite:</span><strong>${meuPalpite.gols_casa} : ${meuPalpite.gols_fora}</strong></div>` : '<span style="color:var(--cinza);font-size:12px">Sem palpite</span>'}
+          ${finalizado ? `<div class="meu-palpite-chip" style="border:1px solid rgba(245,197,24,0.3)"><span>Resultado:</span><strong style="color:var(--dourado)">${resultado.gols_casa} : ${resultado.gols_fora}</strong></div>` : ''}
           ${pontosHtml}
-        </div>` : '';
+        </div>`;
 
       const outrosPalpites = (todosOsPalpites[jogo.id] || []).filter(p => p.user_id !== currentUser.id);
       let outrosHtml = '';
