@@ -651,7 +651,7 @@ function renderJogos() {
     html += `<p class="group-label">Grupo ${g}</p><div class="games-grid">`;
     grupos[g].forEach(jogo => {
       if (!jogo.casa || jogo.casa.startsWith('L') || jogo.casa.startsWith('W')) return;
-      const dataJogo = new Date(jogo.data + 'T' + (jogo.hora || '12:00') + ':00-03:00');
+      const dataJogo = new Date(jogo.data + 'T' + (jogo.hora || '12:00') + ':00');
       const resultado = getResultado(jogo);
       const finalizado = !!resultado;
       const aoVivo = !finalizado && hoje >= dataJogo && (hoje - dataJogo) < 7200000;
