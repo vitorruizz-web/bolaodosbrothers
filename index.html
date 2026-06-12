@@ -120,7 +120,7 @@
   .teams-row { display:flex; align-items:center; gap:12px; }
   .team { min-width:0; flex:1; text-align:center; overflow:hidden; display:flex; align-items:center; justify-content:center; }
   .team-flag { font-size:2.2rem; display:block; margin-bottom:4px; line-height:1; }
-  .team-name { font-size:11px; color:var(--cinza); text-transform:uppercase; letter-spacing:0.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:110px; display:inline-flex; align-items:center; gap:4px; }
+  .team-name { font-size:11px; color:var(--cinza); text-transform:uppercase; letter-spacing:0.5px; font-weight:500; display:inline-flex; align-items:center; gap:4px; flex-wrap:nowrap; max-width:120px; }
   .score-area { display:flex; flex-direction:column; align-items:center; gap:6px; min-width:90px; }
   .real-score { font-family:'Bebas Neue',cursive; font-size:1.8rem; letter-spacing:4px; color:var(--dourado); line-height:1; }
   .real-score-label { font-size:10px; color:var(--cinza); text-transform:uppercase; letter-spacing:1px; }
@@ -713,9 +713,9 @@ const todosPalpitesJogo = (todosOsPalpites[jogo.id] || []);
             <span class="game-badge ${badgeClass}">${badgeText}</span>
           </div>
           <div class="teams-row">
-            <div class="team"><span class="team-name">${jogo.cf} ${jogo.casa}</span></div>
-            <div class="score-area">${scoreDisplay}</div>
-            <div class="team"><span class="team-name">${jogo.ff} ${jogo.fora}</span></div>
+          <div class="team"><span class="team-name">${jogo.cf}<span style="white-space:nowrap">${jogo.casa}</span></span></div>
+          <div class="score-area">${scoreDisplay}</div>
+          <div class="team"><span class="team-name">${jogo.ff}<span style="white-space:nowrap">${jogo.fora}</span></span></div>
           </div>
           <div class="palpite-area">
             <span class="palpite-label">Seu palpite:</span>
