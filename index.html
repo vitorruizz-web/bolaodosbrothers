@@ -481,38 +481,27 @@ async function carregarJogosDaAPI() {
 
 function parseJogosAPI(data) {
   const jogos = [];
-  // A API retorna { rounds: [{ name, matches: [{ num, date, time, team1, team2, score }] }] }
-  // Também pode ter { matches: [...] } diretamente
-  const rounds = data.rounds || [];
-  rounds.forEach(round => {
-    const grupo = extrairGrupo(round.name);
-    (round.matches || []).forEach(m => {
-      const id = `M${m.num || jogos.length + 1}`;
-      const scoreAPI = m.score;
-      let gols_casa = null, gols_fora = null;
-      // Score pode ser { ft: [1,2] } ou { "1": [1,2] } ou null/undefined
-      if (scoreAPI && scoreAPI.ft && scoreAPI.ft.length === 2) {
-        gols_casa = scoreAPI.ft[0];
-        gols_fora = scoreAPI.ft[1];
-      }
-
-      const t1 = normalizarNome(m.team1 || m.team1_key || '');
-      const t2 = normalizarNome(m.team2 || m.team2_key || '');
-
-      jogos.push({
-        id,
-        grupo: grupo || 'Fase de Grupos',
-        casa: t1,
-        fora: t2,
-        cf: getFlag(t1),
-        ff: getFlag(t2),
-        data: m.date || '',
-        hora: (m.time || '').substring(0,5),
-        // Resultado da API (se o jogo já terminou)
-        resultado_api: (gols_casa !== null && gols_fora !== null)
-          ? { gols_casa, gols_fora }
-          : null
-      });
+  const matches = data.matches || [];
+  matches.forEach((m, i) => {
+    const grupo = extrairGrupo(m.group || m.round || '');
+    const id = `M${i + 1}`;
+    let gols_casa = null, gols_fora = null;
+    if (m.score && m.score.ft && m.score.ft.length === 2) {
+      gols_casa = m.score.ft[0];
+      gols_fora = m.score.ft[1];
+    }
+    const t1 = normalizarNome(m.team1 || '');
+    const t2 = normalizarNome(m.team2 || '');
+    jogos.push({
+      id,
+      grupo: grupo || 'Outros',
+      casa: t1,
+      fora: t2,
+      cf: getFlag(t1),
+      ff: getFlag(t2),
+      data: m.date || '',
+      hora: (m.time || '').substring(0, 5),
+      resultado_api: (gols_casa !== null && gols_fora !== null) ? { gols_casa, gols_fora } : null
     });
   });
   return jogos;
