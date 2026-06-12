@@ -529,7 +529,7 @@ function parseJogosAPI(data) {
       cf: getFlag(normalizarNome(m.team1 || '')),
       ff: getFlag(normalizarNome(m.team2 || '')),
       data: m.date || '',
-      hora: (m.time || '').substring(0, 5),
+      hora: ajustarHora(m.time || ''),
       resultado_api: (gols_casa !== null && gols_fora !== null) ? { gols_casa, gols_fora } : null
     });
   });
@@ -547,6 +547,13 @@ function extrairGrupo(nome) {
   if (/final/i.test(nome)) return 'Final';
   if (/third/i.test(nome)) return '3º Lugar';
   return nome; // fallback: usa o nome original
+}
+
+function ajustarHora(time) {
+  if (!time) return '12:00';
+  const [h, min] = time.substring(0, 5).split(':').map(Number);
+  const ajustado = (h + 1) % 24;
+  return String(ajustado).padStart(2, '0') + ':' + String(min).padStart(2, '0');
 }
 
 function normalizarNome(nome) {
